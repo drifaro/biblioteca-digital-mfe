@@ -1,0 +1,58 @@
+.tableCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dataTable thead {
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dataTable th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dataTable td {
+  padding: 5px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-text-1);
+  vertical-align: middle;
+}
+
+.dataTable tr:last-child td { border-bottom: none; }
+
+.dataTable tbody tr { transition: background var(--transition); }
+.dataTable tbody tr:hover { background: var(--color-surface-2); }
+
+.authorCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tdActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.badgeNat {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}

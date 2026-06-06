@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary: #1a3a5c;
+  --color-primary-light: #2563a8;
+  --color-primary-muted: #e8f0f9;
+  --color-accent: #c8702a;
+  --color-accent-light: #f5ede3;
+  --color-surface: #ffffff;
+  --color-surface-2: #f7f6f3;
+  --color-surface-3: #eeede9;
+  --color-text-1: #1c1c1a;
+  --color-text-2: #5a5955;
+  --color-text-3: #9a9893;
+  --color-border: #e0ded9;
+  --color-border-strong: #c8c6c0;
+  --color-success: #2d6a4f;
+  --color-success-bg: #e8f5ee;
+  --color-danger: #9b2c2c;
+  --color-danger-bg: #fdecea;
+  --color-danger-light: #e53e3e;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --font-sans: 'Literata', 'Georgia', serif;
+  --font-ui: 'DM Sans', system-ui, sans-serif;
+  --transition: 0.18s ease;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--color-surface-2);
+  color: var(--color-text-1);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ============================
+   BUTTONS (utility — global)
+   ============================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text-1);
+  border-color: var(--color-border-strong);
+}
+
+.btn-secondary:hover { background: var(--color-surface-3); }
+
+.btn-danger {
+  background: transparent;
+  color: var(--color-danger-light);
+  border-color: transparent;
+  padding: 6px 10px;
+}
+
+.btn-danger:hover {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-bg);
+}
+
+.btn-icon {
+  background: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+  padding: 6px 10px;
+}
+
+.btn-icon:hover {
+  background: var(--color-surface-3);
+  color: var(--color-text-1);
+}
+
+.btn-sm { padding: 5px 12px; font-size: 13px; }
+
+/* ============================
+   UTILITIES (global)
+   ============================ */
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.text-muted { color: var(--color-text-3); font-size: 13px; }

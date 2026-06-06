@@ -1,0 +1,20 @@
+.confirmText {
+  font-size: 15px;
+  color: var(--color-text-1);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.confirmName {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.confirmWarning {
+  font-size: 13px;
+  color: var(--color-danger-light);
+  background: var(--color-danger-bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+}
