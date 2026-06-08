@@ -4,7 +4,7 @@ import styles from "./Footer.module.css";
 const Footer: React.FC = () => {
   return (
     <footer className={styles.appFooter}>
-      <span>Biblioteca Digital Simplificada — Arquitetura Monolítica</span>
+      <span>Biblioteca Digital Simplificada — Arquitetura MFE</span>
       <span>TCC • React + Vite + TypeScript + MSW • {new Date().getFullYear()}</span>
       <span>
         Desenvolvido por{" "}
