@@ -18,6 +18,9 @@ A aplicação é composta por **4 projetos independentes** em um monorepo npm wo
 
 Todas as chamadas HTTP são interceptadas pelo [MSW](https://mswjs.io) — não é necessário nenhum servidor backend para rodar o projeto.
 
+<img width="1906" height="919" alt="image" src="https://github.com/user-attachments/assets/cd6ee1a7-4015-4d4c-b76a-b0b001602d95" />
+
+
 ---
 
 ## Projetos
