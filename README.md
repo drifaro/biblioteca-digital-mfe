@@ -35,46 +35,43 @@ Todas as chamadas HTTP são interceptadas pelo [MSW](https://mswjs.io) — não 
 
 ```bash
 # Na raiz do monorepo — instala dependências de todos os pacotes
+# (incluindo serve e concurrently, declarados nas devDependencies)
 npm install
-
-# Inicializar o service worker do MSW no container (já incluso no repositório)
-cd container && npx msw init public/ --save
 ```
 
 ---
 
 ## Execução
 
-O Module Federation requer que os projetos estejam **buildados** antes de serem consumidos.
-Use o script `start` de cada pacote, que faz build e sobe um servidor estático com CORS:
+Os **módulos remotos** precisam ser compilados para gerar o `remoteEntry.js` antes de serem consumidos pelo Host.
+Na raiz do monorepo, o script `start` usa `concurrently` para iniciar os remotes (build + servidor estático com CORS via `serve`) e o container (Vite em modo de desenvolvimento):
 
 ```bash
-# Atalho — sobe todos os pacotes de uma vez (na raiz do monorepo)
+# Na raiz do monorepo — inicia os 4 projetos em paralelo
 npm start
 ```
 
-Ou, para controlar a ordem manualmente (recomendado — mfe-shared deve subir primeiro):
+Ou, para iniciar manualmente, abra **um terminal por comando**, sempre a partir da raiz do monorepo:
 
 ```bash
-# Terminal 1 — mfe-shared (deve subir primeiro)
-cd mfe-shared && npm start   # build + serve em :3003
+# Terminal 1 — mfe-shared (build + serve em :3003)
+npm start -w mfe-shared
 
-# Terminal 2
-cd mfe-books && npm start    # build + serve em :3001
+# Terminal 2 — mfe-books (build + serve em :3001)
+npm start -w mfe-books
 
-# Terminal 3
-cd mfe-authors && npm start  # build + serve em :3002
+# Terminal 3 — mfe-authors (build + serve em :3002)
+npm start -w mfe-authors
 
-# Terminal 4 — container (deve subir por último)
-cd container && npm start    # build + serve em :3000
+# Terminal 4 — container (Host em modo dev, porta :3000)
+npm run dev -w container
 ```
 
-Acesse `http://localhost:3000` após todos os terminais estarem prontos.
+Aguarde os builds dos remotes terminarem e acesse `http://localhost:3000` (ou a URL exibida no terminal do container).
 
-> **Por que não usar `npm run dev`?**
-> Em modo de desenvolvimento o Vite serve módulos via HMR e não gera o `remoteEntry.js`
-> necessário para o Module Federation. O `npm start` usa `serve` (servidor estático)
-> que suporta Service Workers e CORS corretamente.
+> **Por que usar `npm start` nos remotes e `npm run dev` no container?**
+> Com `@originjs/vite-plugin-federation`, os remotes precisam de build para disponibilizar o `remoteEntry.js`, servido pelo `serve`. Já o container pode ser executado pelo Vite em modo de desenvolvimento.
+> O `npm start` da raiz combina esses comandos em paralelo. Se o container abrir antes de algum remote ficar pronto, aguarde a conclusão dos builds e atualize a página.
 
 ---
 
@@ -88,6 +85,7 @@ Acesse `http://localhost:3000` após todos os terminais estarem prontos.
 | Fake backend      | MSW 2                                           |
 | Estilos           | CSS Modules + CSS global (sem biblioteca de UI) |
 | Monorepo          | npm workspaces                                  |
+| Execução local    | `concurrently` + `serve`                        |
 
 ---
 

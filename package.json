@@ -8,8 +8,11 @@
     "mfe-shared"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
+    "dev": "npm run dev -w container",
     "build": "npm run build --workspaces --if-present",
-    "start": "npm run start --workspaces --if-present"
+    "start": "concurrently -k -n shared,books,authors,container \"npm start -w mfe-shared\" \"npm start -w mfe-books\" \"npm start -w mfe-authors\" \"npm run dev -w container\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
   }
 }

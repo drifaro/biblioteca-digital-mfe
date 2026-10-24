@@ -17,7 +17,8 @@ pelo browser, sem que eles precisem estar no mesmo bundle.
 
 ```
 biblioteca-digital-mfe/
-├── package.json               ← raiz do monorepo (workspaces)
+├── package.json               ← raiz do monorepo (workspaces e scripts de orquestração)
+├── package-lock.json          ← versões das dependências instaladas
 ├── mfe-shared/                ← Remote — biblioteca de componentes (porta 3003)
 │   ├── federation.config.ts   ← lista o que é exposto via Module Federation
 │   ├── vite.config.ts
@@ -55,6 +56,44 @@ biblioteca-digital-mfe/
         ├── App.module.css
         └── mocks/             ← MSW completo (handlers de books e authors)
 ```
+
+---
+
+## Execução Local e Orquestração
+
+O monorepo utiliza **npm workspaces** para gerenciar os pacotes. Na raiz, o script
+`npm start` utiliza **`concurrently`** para iniciar os três Remotes e o Host em paralelo.
+Os Remotes utilizam **`serve`** para disponibilizar os arquivos compilados com CORS.
+Ambos os pacotes devem estar declarados nas dependências de desenvolvimento e registrados
+no `package-lock.json`.
+
+```bash
+# Na raiz: instala as dependências a partir do lockfile
+npm ci
+
+# Inicia todos os projetos em paralelo
+npm start
+```
+
+| Processo      | Execução                                                         | Porta |
+| ------------- | ---------------------------------------------------------------- | ----- |
+| `mfe-shared`  | `npm start -w mfe-shared` (build + servidor estático)            | 3003  |
+| `mfe-books`   | `npm start -w mfe-books` (build + servidor estático)             | 3001  |
+| `mfe-authors` | `npm start -w mfe-authors` (build + servidor estático)           | 3002  |
+| `container`   | `npm run dev -w container` (servidor de desenvolvimento do Vite) | 3000  |
+
+Os processos são iniciados em paralelo, mas isso **não garante que os Remotes estejam
+prontos antes do Host**. Aguarde a conclusão dos builds antes de acessar
+`http://localhost:3000`. As URLs configuradas para o Module Federation devem retornar
+JavaScript, por exemplo: `http://localhost:3003/assets/remoteEntry.js`.
+
+O comando anterior `npm run start --workspaces --if-present` iniciava os workspaces
+**sequencialmente**. Como o primeiro servidor permanece ativo, os demais não eram
+iniciados. O uso de `concurrently` resolve essa limitação para a execução local.
+
+Para iniciar os módulos manualmente, execute cada comando da tabela em um terminal
+separado. O comando `npm run dev` na raiz inicia somente o `container`; os Remotes
+continuam precisando do build para disponibilizar seus arquivos `remoteEntry.js`.
 
 ---
 
